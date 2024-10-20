@@ -10,6 +10,11 @@ local dicts = {
         dict = "amb@world_human_tourist_map@male@idle_a",
         anim = "idle_a",
         prop = "prop_tourist_map_01",
+    },
+    [3] = {
+        dict = "amb@code_human_in_bus_passenger_idles@female@tablet@idle_a",
+        anim = "idle_a",
+        prop = "prop_tourist_map_01",
     }
 }
 
@@ -17,17 +22,14 @@ local obj = nil
 
 RegisterNuiCallback("close", function(data, cb)
     SetNuiFocus(false, false)
-
     ClearPedTasks(PlayerPedId())
     DeleteEntity(obj)
-
     cb('ok')
 end)
 
 function PlayAnim()
     math.randomseed(GetGameTimer())
-    math.randomseed(GetGameTimer())
-    math.randomseed(GetGameTimer())
+
     local random = math.random(1, #dicts)
     local dict = dicts[random].dict
     local anim = dicts[random].anim

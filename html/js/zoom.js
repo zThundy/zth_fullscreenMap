@@ -1,4 +1,4 @@
-const debug = true;
+const debug = false;
 
 console.logger = function (a) {
     if (debug) console.log(a);
@@ -106,7 +106,7 @@ console.logTable = function (a) {
                 img_current_width: img_current_width
             })
 
-            if (new_limit != 0 && new_limit != 3 && new_limit != zoom_limit && zoom_limit !== null) { // At a limit (not both), has just hit that limit, and isn't happening on page load.
+            if (new_limit != 0 && new_limit != 3 && new_limit != zoom_limit && zoom_limit !== null) {
                 div_ref.style.opacity = 0.5;
                 setTimeout(function () { div_ref.style.opacity = 1; }, 150);
             }
@@ -143,6 +143,12 @@ console.logTable = function (a) {
                 }
             }
 
+            if (current_zoom === 1) {
+                div_ref.style.cursor = "pointer";
+                img_ref.style.cursor = "pointer";
+            }
+            console.log("image_zoom_change", change, current_zoom);
+
             let new_zoom = (current_zoom + change);
             if (new_zoom < 0) new_zoom = 0;
             if (new_zoom > zoom_level_count) new_zoom = zoom_level_count;
@@ -154,11 +160,6 @@ console.logTable = function (a) {
 
         function image_zoom_in(e) {
             image_zoom_change(1);
-            return preventPropagationAndDefault(e);
-        }
-
-        function image_zoom_out(e) {
-            image_zoom_change(-1);
             return preventPropagationAndDefault(e);
         }
 
@@ -249,22 +250,6 @@ console.logTable = function (a) {
             removeEventListener(document, 'mouseup', image_event_end);
         }
 
-        //--------------------------------------------------
-        // Keyboard event
-
-        function keyboard_event(e) {
-            var keyCode = (e ? e.which : window.event.keyCode);
-            if (keyCode === 37 || keyCode === 39) { // left or right
-                image_move_update((img_current_left + (keyCode === 39 ? 50 : -50)), img_current_top);
-            } else if (keyCode === 38 || keyCode === 40) { // up or down
-                image_move_update(img_current_left, (img_current_top + (keyCode === 40 ? 50 : -50)));
-            } else if (keyCode === 107 || keyCode === 187 || keyCode === 61) { // + or = (http://www.javascripter.net/faq/keycodes.htm)
-                image_zoom_in(e);
-            } else if (keyCode === 109 || keyCode === 189) { // - or _
-                image_zoom_out(e);
-            }
-        }
-
         function init() {
             div_ref = document.getElementById('mapContainer');
             img_ref = document.getElementById('map');
@@ -328,7 +313,6 @@ console.logTable = function (a) {
                 addEventListener(div_ref, 'mousedown', image_event_start);
 
                 div_ref.tabIndex = '0';
-                addEventListener(div_ref, 'keyup', keyboard_event);
             }
         }
 

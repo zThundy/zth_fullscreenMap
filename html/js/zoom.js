@@ -14,6 +14,8 @@ console.logTable = function (a) {
         var div_ref = null;
         var img_ref = null;
 
+        let double_clip_last = 0;
+
         var
             div_half_width = null,
             div_half_height = null,
@@ -30,8 +32,7 @@ console.logTable = function (a) {
             zoom_max_width = null,
             move_origin_cords = null,
             move_origin_left = null,
-            move_origin_top = null,
-            click_last = 0;
+            move_origin_top = null
 
         if (typeof (Math) === 'undefined') {
             return false;
@@ -212,14 +213,13 @@ console.logTable = function (a) {
 
         function image_event_start(e) {
             image_event_end();
-
             console.logger('image_event_start', e.type);
 
             var now = new Date().getTime();
-            if (click_last > (now - 200)) {
+            if (double_clip_last > (now - 200)) {
                 image_zoom_in(e);
             } else {
-                click_last = now;
+                double_clip_last = now;
             }
 
             move_origin_left = img_current_left;

@@ -1,14 +1,19 @@
 # Fullscreen Image Zoom Website
 
 ## Description
-A simple website that allows users to zoom in on a fullscreen image. This project demonstrates how to implement image zoom functionality using HTML, CSS, and JavaScript.
+A FiveM resource that makes possible zomming on a png image.
+Useful to simulate maps (like the provided example) for orienting.
 
 ## Features
 - Fullscreen image display
 - Smooth zoom in and zoom out functionality
-- Responsive design
 
 ## Installation
+1. Donwload the release from GitHub or clone the repository
+2. Add the folder to your FiveM server
+3. Start the resource
+
+## Developing
 1. Clone the repository:
     ```sh
     git clone https://github.com/zThundy/zth_fullscreenMap.git
@@ -27,23 +32,9 @@ A simple website that allows users to zoom in on a fullscreen image. This projec
 ## Technologies
 - HTML
 - CSS
+- JQuery
 - JavaScript
-
-## Contributing
-1. Fork the repository.
-2. Create a new branch:
-    ```sh
-    git checkout -b feature/your-feature-name
-    ```
-3. Make your changes and commit them:
-    ```sh
-    git commit -m 'Add some feature'
-    ```
-4. Push to the branch:
-    ```sh
-    git push origin feature/your-feature-name
-    ```
-5. Open a pull request.
+- LUA
 
 ## Images
 ### Homepage

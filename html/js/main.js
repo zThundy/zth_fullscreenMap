@@ -1,4 +1,4 @@
-const debug = true;
+const debug = false;
 
 console.logger = function (a) {
     if (debug) console.log(a);

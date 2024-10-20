@@ -7,22 +7,22 @@
     let double_clip_last = 0;
 
     var
-        div_half_width = null,
-        div_half_height = null,
-        img_original_width = null,
-        img_original_height = null,
-        img_current_width = null,
-        img_current_height = null,
-        img_current_left = null,
-        img_current_top = null,
-        zoom_levels = [],
-        zoom_level_count = 0,
-        zoom_limit = null,
-        zoom_min_width = null,
-        zoom_max_width = null,
-        move_origin_cords = null,
-        move_origin_left = null,
-        move_origin_top = null
+        divHalfWidth = null,
+        divHalfHeight = null,
+        imgOriginalWidth = null,
+        imgOriginalHeight = null,
+        imgCurrentWidth = null,
+        imgCurrentHeight = null,
+        imgCurrentLeft = null,
+        imgCurrentTop = null,
+        zoomLevels = [],
+        zoomLevelCount = 0,
+        zoomLimit = null,
+        zoomMinWidth = null,
+        zoomMaxWidth = null,
+        moveOriginCoords = null,
+        moveOriginLeft = null,
+        moveOriginTop = null
 
     if (typeof (Math) === 'undefined') {
         return false;
@@ -81,44 +81,44 @@
         return coords;
     }
 
-    function image_zoom_update(new_width) {
+    function image_zoom_update(newWidth) {
         var new_limit = 0,
-            new_height = 0,
+            newHeight = 0,
             ratio = 0;
 
-        if (new_width == zoom_max_width) new_limit = (new_limit | 1);
-        if (new_width == zoom_min_width) new_limit = (new_limit | 2);
+        if (newWidth == zoomMaxWidth) new_limit = (new_limit | 1);
+        if (newWidth == zoomMinWidth) new_limit = (new_limit | 2);
 
         console.logTable({
             new_limit: new_limit,
-            new_width: new_width,
-            zoom_limit: zoom_limit,
-            img_current_width: img_current_width
+            newWidth: newWidth,
+            zoomLimit: zoomLimit,
+            imgCurrentWidth: imgCurrentWidth
         })
 
-        if (new_limit != 0 && new_limit != 3 && new_limit != zoom_limit && zoom_limit !== null) {
+        if (new_limit != 0 && new_limit != 3 && new_limit != zoomLimit && zoomLimit !== null) {
             div_ref.style.opacity = 0.5;
             setTimeout(function () { div_ref.style.opacity = 1; }, 150);
         }
 
-        new_height = ((img_original_height / img_original_width) * new_width);
+        newHeight = ((imgOriginalHeight / imgOriginalWidth) * newWidth);
 
-        if (img_current_left === null) {
-            img_current_left = (div_half_width - (new_width / 2));
-            img_current_top = (div_half_height - (new_height / 2));
+        if (imgCurrentLeft === null) {
+            imgCurrentLeft = (divHalfWidth - (newWidth / 2));
+            imgCurrentTop = (divHalfHeight - (newHeight / 2));
         } else {
-            ratio = (new_width / img_current_width);
-            img_current_left = (div_half_width - ((div_half_width - img_current_left) * ratio));
-            img_current_top = (div_half_height - ((div_half_height - img_current_top) * ratio));
+            ratio = (newWidth / imgCurrentWidth);
+            imgCurrentLeft = (divHalfWidth - ((divHalfWidth - imgCurrentLeft) * ratio));
+            imgCurrentTop = (divHalfHeight - ((divHalfHeight - imgCurrentTop) * ratio));
         }
 
-        img_current_width = new_width;
-        img_current_height = new_height;
+        imgCurrentWidth = newWidth;
+        imgCurrentHeight = newHeight;
 
-        img_ref.style.width = img_current_width + 'px';
-        img_ref.style.height = img_current_height + 'px';
-        img_ref.style.left = img_current_left + 'px';
-        img_ref.style.top = img_current_top + 'px';
+        img_ref.style.width = imgCurrentWidth + 'px';
+        img_ref.style.height = imgCurrentHeight + 'px';
+        img_ref.style.left = imgCurrentLeft + 'px';
+        img_ref.style.top = imgCurrentTop + 'px';
 
         return true;
     }
@@ -126,8 +126,8 @@
     function image_zoom_change(change) {
         var current_zoom = 0;
 
-        for (let k = zoom_level_count; k >= 0; k--) {
-            if (zoom_levels[k] <= img_current_width) {
+        for (let k = zoomLevelCount; k >= 0; k--) {
+            if (zoomLevels[k] <= imgCurrentWidth) {
                 current_zoom = k;
                 break;
             }
@@ -140,11 +140,11 @@
 
         let new_zoom = (current_zoom + change);
         if (new_zoom < 0) new_zoom = 0;
-        if (new_zoom > zoom_level_count) new_zoom = zoom_level_count;
+        if (new_zoom > zoomLevelCount) new_zoom = zoomLevelCount;
 
-        let new_width = zoom_levels[new_zoom];
+        let newWidth = zoomLevels[new_zoom];
 
-        image_zoom_update(new_width);
+        image_zoom_update(newWidth);
     }
 
     function image_zoom_in(e) {
@@ -163,19 +163,19 @@
     }
 
     function image_move_update(new_left, new_top) {
-        var max_left = (div_half_width - img_current_width),
-            max_top = (div_half_height - img_current_height);
+        var max_left = (divHalfWidth - imgCurrentWidth),
+            max_top = (divHalfHeight - imgCurrentHeight);
 
-        if (new_left > div_half_width) { new_left = div_half_width; }
-        if (new_top > div_half_height) { new_top = div_half_height; }
+        if (new_left > divHalfWidth) { new_left = divHalfWidth; }
+        if (new_top > divHalfHeight) { new_top = divHalfHeight; }
         if (new_left < max_left) { new_left = max_left; }
         if (new_top < max_top) { new_top = max_top; }
 
-        img_current_left = new_left;
-        img_current_top = new_top;
+        imgCurrentLeft = new_left;
+        imgCurrentTop = new_top;
 
-        img_ref.style.left = img_current_left + 'px';
-        img_ref.style.top = img_current_top + 'px';
+        img_ref.style.left = imgCurrentLeft + 'px';
+        img_ref.style.top = imgCurrentTop + 'px';
     }
 
     function image_move_event(e) {
@@ -184,8 +184,8 @@
         // Calculations
 
         var new_cords = event_move_coords(e),
-            new_left = (move_origin_left + (new_cords[0] - move_origin_cords[0])),
-            new_top = (move_origin_top + (new_cords[1] - move_origin_cords[1]));
+            new_left = (moveOriginLeft + (new_cords[0] - moveOriginCoords[0])),
+            new_top = (moveOriginTop + (new_cords[1] - moveOriginCoords[1]));
 
         console.logTable({
             new_cords: new_cords,
@@ -212,14 +212,14 @@
             double_clip_last = now;
         }
 
-        move_origin_left = img_current_left;
-        move_origin_top = img_current_top;
-        move_origin_cords = event_move_coords(e);
+        moveOriginLeft = imgCurrentLeft;
+        moveOriginTop = imgCurrentTop;
+        moveOriginCoords = event_move_coords(e);
 
         console.logTable({
-            move_origin_left: move_origin_left,
-            move_origin_top: move_origin_top,
-            move_origin_cords: move_origin_cords
+            moveOriginLeft: moveOriginLeft,
+            moveOriginTop: moveOriginTop,
+            moveOriginCoords: moveOriginCoords
         })
 
         console.logger('image_event_start registering events: image_move_event | image_event_end', e.type);
@@ -246,51 +246,51 @@
         if (div_ref && img_ref) {
             try {
                 let div_style = getComputedStyle(div_ref, '');
-                div_half_width = div_style.getPropertyValue('width');
-                div_half_height = div_style.getPropertyValue('height');
+                divHalfWidth = div_style.getPropertyValue('width');
+                divHalfHeight = div_style.getPropertyValue('height');
             } catch (e) {
-                div_half_width = div_ref.currentStyle.width;
-                div_half_height = div_ref.currentStyle.height;
+                divHalfWidth = div_ref.currentStyle.width;
+                divHalfHeight = div_ref.currentStyle.height;
             }
 
-            div_half_width = Math.round(parseInt(div_half_width, 10) / 2);
-            div_half_height = Math.round(parseInt(div_half_height, 10) / 2);
+            divHalfWidth = Math.round(parseInt(divHalfWidth, 10) / 2);
+            divHalfHeight = Math.round(parseInt(divHalfHeight, 10) / 2);
 
-            img_original_width = img_ref.width;
-            img_original_height = img_ref.height;
+            imgOriginalWidth = img_ref.width;
+            imgOriginalHeight = img_ref.height;
 
-            let div_width = (div_half_width * 2);
-            let div_height = (div_half_height * 2);
+            let div_width = (divHalfWidth * 2);
+            let div_height = (divHalfHeight * 2);
 
-            let width = img_original_width;
-            let height = img_original_height;
+            let width = imgOriginalWidth;
+            let height = imgOriginalHeight;
 
-            img_current_width = null;
-            img_current_height = null;
-            img_current_left = null;
-            img_current_top = null;
+            imgCurrentWidth = null;
+            imgCurrentHeight = null;
+            imgCurrentLeft = null;
+            imgCurrentTop = null;
 
-            zoom_limit = null;
-            zoom_levels = [];
-            zoom_levels[zoom_levels.length] = width * 3;
-            zoom_levels[zoom_levels.length] = Math.round(img_original_width * 1.75);
-            zoom_levels[zoom_levels.length] = width;
+            zoomLimit = null;
+            zoomLevels = [];
+            zoomLevels[zoomLevels.length] = width * 3;
+            zoomLevels[zoomLevels.length] = Math.round(imgOriginalWidth * 1.75);
+            zoomLevels[zoomLevels.length] = width;
 
             while (width > div_width || height > div_height) {
                 width = (width * 0.75);
                 height = (height * 0.75);
-                zoom_levels[zoom_levels.length] = Math.round(width);
+                zoomLevels[zoomLevels.length] = Math.round(width);
             }
 
-            console.logger(JSON.stringify(zoom_levels, null, 2));
-            zoom_levels.reverse();
-            zoom_level_count = (zoom_levels.length - 1);
-            console.logger(JSON.stringify(zoom_levels, null, 2));
+            console.logger(JSON.stringify(zoomLevels, null, 2));
+            zoomLevels.reverse();
+            zoomLevelCount = (zoomLevels.length - 1);
+            console.logger(JSON.stringify(zoomLevels, null, 2));
 
-            zoom_min_width = zoom_levels[0];
-            zoom_max_width = zoom_levels[zoom_level_count];
+            zoomMinWidth = zoomLevels[0];
+            zoomMaxWidth = zoomLevels[zoomLevelCount];
 
-            image_zoom_update(zoom_levels[0]);
+            image_zoom_update(zoomLevels[0]);
             img_ref.style.visibility = 'visible';
 
             // ty stack

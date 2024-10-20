@@ -10,11 +10,6 @@ local dicts = {
         dict = "amb@world_human_tourist_map@male@idle_a",
         anim = "idle_a",
         prop = "prop_tourist_map_01",
-    },
-    [3] = {
-        dict = "amb@code_human_in_bus_passenger_idles@female@tablet@idle_a",
-        anim = "idle_a",
-        prop = "prop_tourist_map_01",
     }
 }
 

@@ -1,4 +1,4 @@
-const debug = false;
+const debug = true;
 
 console.logger = function (a) {
     if (debug) console.log(a);
@@ -18,7 +18,7 @@ $(document).ready(function () {
         console.logger(`[DEBUG] type: ${type}, data: ${data}`);
         switch (type) {
             case 'open':
-                $("body").style({ 'display': 'block' });
+                $("body").css({ 'opacity': '1' });
                 break;
             case 'resName':
                 console.logger(`[DEBUG] resName: ${data}`);
@@ -29,7 +29,10 @@ $(document).ready(function () {
 
     // onkeydown
     $(document).on('keydown', function (e) {
+        console.logger(`[DEBUG] keydown: ${e.which}`);
+
         if (e.which == 27) {
+            $("body").css({ 'opacity': '0' });
             $.post(`https://${resName}/close`, JSON.stringify({}));
         }
     });

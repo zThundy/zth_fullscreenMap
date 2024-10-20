@@ -1,10 +1,4 @@
 
-Citizen.CreateThread(function()
-    SendNuiMessage({
-        type = "resName",
-        data = GetCurrentResourceName()
-    })
-end)
 
 RegisterNuiCallback("close", function(data, cb)
     SetNuiFocus(false, false)
@@ -12,6 +6,11 @@ RegisterNuiCallback("close", function(data, cb)
 end)
 
 function OpenUI()
-    SetNuiFocus(true, true)
+    SendNUIMessage({ type = "resName", data = GetCurrentResourceName() })
     SendNUIMessage({ type = "open" })
+    SetNuiFocus(true, true)
 end
+
+RegisterCommand("openui", function()
+    OpenUI()
+end)

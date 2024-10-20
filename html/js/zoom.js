@@ -1,4 +1,4 @@
-; (function (document, window) {
+; (function (document, window, undefined) {
     'use strict';
 
     var div_ref = null;
@@ -134,10 +134,9 @@
         }
 
         if (current_zoom === 1) {
-            div_ref.style.cursor = "pointer";
-            img_ref.style.cursor = "pointer";
+            img_ref.style.cursor = "grab";
         }
-        console.log("image_zoom_change", change, current_zoom);
+        console.logger("image_zoom_change", change, current_zoom);
 
         let new_zoom = (current_zoom + change);
         if (new_zoom < 0) new_zoom = 0;
